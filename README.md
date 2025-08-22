@@ -1,6 +1,9 @@
 # USB Bootable Creator
 
-Un script Bash interactif pour créer une clé USB bootable facilement sous Linux, avec confirmation, progression et éjection automatique.
+## Avertissement
+
+Ce script efface **toutes les données** de la clé USB sélectionnée.
+Vérifiez bien le périphérique avant de confirmer. L’auteur ne peut être tenu responsable en cas d’utilisation incorrecte.
 
 ## Résumé rapide
 Créer une clé USB bootable facilement avec un script Bash interactif : choix du périphérique, ISO, progression en temps réel, sécurité.
@@ -37,3 +40,11 @@ Lancez simplement le script :
 ```bash
 .\bootable_usb.sh
 ```
+
+Ensuite :
+
+- Le script liste les périphériques disponibles (les clés USB apparaissent avec TRAN=usb).
+- Sélectionnez la clé à utiliser.
+- Choisissez l’image ISO (complétion Tab ou via une boîte de dialogue si zenity est installé).
+- Patientez pendant la gravure (barre de progression affichée).
+- La clé est automatiquement éjectée à la fin.
