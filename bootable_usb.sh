@@ -57,7 +57,7 @@ sudo umount "${device}"* || true
 
 # 5. Écriture avec barre de progression
 echo "Gravure en cours... (ça peut prendre plusieurs minutes)"
-sudo dd if="$iso" | pv | sudo dd of="$device" bs=4M conv=fsync status=none
+sudo pv "$iso" | sudo dd of="$device"
 
 # 6. Synchronisation
 sync
