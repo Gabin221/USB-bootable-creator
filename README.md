@@ -45,6 +45,6 @@ Ensuite :
 
 - Le script liste les périphériques disponibles (les clés USB apparaissent avec TRAN=usb).
 - Sélectionnez la clé à utiliser.
-- Choisissez l’image ISO (complétion Tab ou via une boîte de dialogue si zenity est installé).
+- Choisissez l’image ISO (complétion Tab).
 - Patientez pendant la gravure (barre de progression affichée).
 - La clé est automatiquement éjectée à la fin.
