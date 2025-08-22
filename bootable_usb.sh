@@ -3,11 +3,26 @@
 
 set -euo pipefail
 
+# Fonction pour vérifier et installer une dépendance
+check_dependency() {
+    local pkg=$1
+    local cmd=$2
+
+    if ! command -v "$cmd" &> /dev/null; then
+        echo "Le paquet '$pkg' n'est pas installé."
+        read -rp "Voulez-vous l'installer maintenant ? (o/N) : " install_choice
+        if [[ "$install_choice" =~ ^[oOyY]$ ]]; then
+            sudo apt update
+            sudo apt install -y "$pkg"
+        else
+            echo "Le script nécessite '$pkg'. Abandon."
+            exit 1
+        fi
+    fi
+}
+
 # Vérification des dépendances
-if ! command -v pv &> /dev/null; then
-    echo "Le paquet 'pv' n'est pas installé. Installe-le avec : sudo apt install pv"
-    exit 1
-fi
+check_dependency "pv" "pv"
 
 echo "=== Créateur de clé USB bootable ==="
 echo
