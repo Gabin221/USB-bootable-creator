@@ -13,7 +13,7 @@ Créer une clé USB bootable facilement avec un script Bash interactif : choix d
 - Affiche uniquement les **disques entiers** (sans partitions)  
 - Colore la colonne **NAME** pour éviter les erreurs  
 - Confirmation avant d’écraser une clé  
-- Choix de l’ISO avec **complétion Tab** ou **boîte de dialogue graphique**  
+- Choix de l’ISO avec **complétion via Tab** pour sélectionner facilement le chemin vers l'ISO
 - Affiche une **barre de progression** pendant la gravure (`pv`)  
 - Éjecte automatiquement la clé si la gravure réussit  
 
