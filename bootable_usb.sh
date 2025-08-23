@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script interactif pour rendre une clé USB bootable
+# Script interactif pour rendre une clé USB bootable (Windows ou Linux)
 
 set -euo pipefail
 
@@ -21,11 +21,11 @@ check_dependency() {
     fi
 }
 
-# Vérification des dépendances
-check_dependency "pv" "pv"
-
 echo "=== Créateur de clé USB bootable ==="
 echo
+
+# Vérification des dépendances de base
+check_dependency "pv" "pv"
 
 # 1. Lister uniquement les disques (pas les partitions)
 echo "Voici la liste des périphériques disponibles (en bleu) :"
@@ -55,14 +55,30 @@ fi
 echo "Démontage de la clé si nécessaire..."
 sudo umount "${device}"* || true
 
-# 5. Écriture avec barre de progression
-echo "Gravure en cours... (ça peut prendre plusieurs minutes)"
-sudo pv "$iso" | sudo dd of="$device"
+# 5. Détection du type d'ISO
+echo "Détection du type d'image..."
+if 7z l "$iso" | grep -q "sources/"; then
+    os_type="windows"
+else
+    os_type="linux"
+fi
 
-# 6. Synchronisation
+# 6. Installation sur la clé selon le type
+if [[ "$os_type" == "windows" ]]; then
+    echo "Image détectée : Windows"
+    check_dependency "woeusb" "woeusb"
+    echo "Gravure en cours avec WoeUSB..."
+    sudo woeusb --device "$iso" "$device" --target-filesystem NTFS
+else
+    echo "Image détectée : Linux"
+    echo "Gravure en cours avec dd... (ça peut prendre plusieurs minutes)"
+    sudo pv "$iso" | sudo dd of="$device" bs=4M conv=fsync status=none
+fi
+
+# 7. Synchronisation
 sync
 
-# 7. Éjection uniquement si tout a réussi
+# 8. Éjection uniquement si tout a réussi
 sudo eject "$device"
 
 echo
